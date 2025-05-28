@@ -71,6 +71,7 @@ export const runningActions: Writable<string[]> = writable([])
 export const activeSlideRecording: Writable<any> = writable(null)
 export const pcoConnected: Writable<boolean> = writable(false)
 export const chumsConnected: Writable<boolean> = writable(false)
+export const chumsSyncCategories: Writable<string[]> = writable([]) // Categories to sync with Chums
 
 // TAGS
 export const activeTagFilter: Writable<string[]> = writable([])

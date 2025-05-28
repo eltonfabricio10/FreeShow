@@ -229,6 +229,10 @@
             <Icon id="cloud_sync" right />
             <p><T id="cloud.sync" /></p>
         </Button>
+        <Button on:click={() => activePopup.set("chums_sync_categories")}>
+            <Icon id="settings" right />
+            <p><T id="chums.sync_categories" /></p>
+        </Button>
     {/if}
 </CombinedInput>
 
