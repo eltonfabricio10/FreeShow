@@ -1,18 +1,29 @@
 <script lang="ts">
     import { activePopup, categories, chumsSyncCategories, shows } from "../../../stores"
     import { sortByName } from "../../../components/helpers/array"
-    import Icon from "../../../components/helpers/Icon.svelte"
     import T from "../../../components/helpers/T.svelte"
     import Button from "../../../components/inputs/Button.svelte"
     import Checkbox from "../../../components/inputs/Checkbox.svelte"
+    import { translate } from "../../../utils/language"
 
-    $: categoryOptions = sortByName(
-        Object.entries($categories).map(([id, category]) => ({
+    console.log("CATEGORIES", $categories)
+    const mappedCategories = Object.entries($categories).map(([id, category]) => {
+        const mapped = {
             id,
             name: category.name,
+            displayName: category.default ? translate(category.name) || category.name : category.name,
             count: Object.values($shows).filter((show) => show.category === id).length,
-        }))
-    )
+        }
+        console.log("Mapped category:", id, mapped)
+        return mapped
+    })
+    console.log("MAPPED CATEGORIES", mappedCategories)
+    let categoryOptions: any[] = []
+    $: {
+        console.log("Before sortByName:", mappedCategories)
+        categoryOptions = sortByName(mappedCategories, "displayName")
+        console.log("After sortByName:", categoryOptions)
+    }
 
     function handleChange(e: Event, id: string) {
         const customEvent = e as CustomEvent<boolean>
@@ -31,24 +42,19 @@
 <div class="popup">
     <div class="header">
         <h2><T id="chums.sync_categories" /></h2>
-        <button class="close" on:click={() => (activePopup.set(null))}>
-            <Icon id="close" />
-        </button>
     </div>
 
     <div class="content">
         <p><T id="chums.sync_categories_description" /></p>
 
         <div class="categories">
-            {#each categoryOptions as { id, name, count }}
+            {#each categoryOptions as { id, displayName, count }}
                 <div class="category">
                     <Checkbox
                         checked={$chumsSyncCategories.includes(id)}
                         on:change={(e) => handleChange(e, id)}
-                    >
-                        <T id={name} />
-                    </Checkbox>
-                    <span class="count">({count})</span>
+                    />
+                    <span class="count">{displayName} ({count})</span>
                 </div>
             {/each}
         </div>
