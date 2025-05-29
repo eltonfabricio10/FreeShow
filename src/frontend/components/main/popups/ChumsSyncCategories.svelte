@@ -6,7 +6,7 @@
     import Checkbox from "../../../components/inputs/Checkbox.svelte"
     import { translate } from "../../../utils/language"
 
-    console.log("CATEGORIES", $categories)
+    
     const mappedCategories = Object.entries($categories).map(([id, category]) => {
         const mapped = {
             id,
@@ -14,16 +14,12 @@
             displayName: category.default ? translate(category.name) || category.name : category.name,
             count: Object.values($shows).filter((show) => show.category === id).length,
         }
-        console.log("Mapped category:", id, mapped)
         return mapped
     })
-    console.log("MAPPED CATEGORIES", mappedCategories)
+    
     let categoryOptions: any[] = []
-    $: {
-        console.log("Before sortByName:", mappedCategories)
-        categoryOptions = sortByName(mappedCategories, "displayName")
-        console.log("After sortByName:", categoryOptions)
-    }
+    $: categoryOptions = sortByName(mappedCategories, "displayName")
+    
 
     function handleChange(e: Event, id: string) {
         const customEvent = e as CustomEvent<boolean>
