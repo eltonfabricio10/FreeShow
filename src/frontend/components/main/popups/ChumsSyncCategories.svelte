@@ -5,6 +5,9 @@
     import Button from "../../../components/inputs/Button.svelte"
     import Checkbox from "../../../components/inputs/Checkbox.svelte"
     import { translate } from "../../../utils/language"
+    import { sendMain, requestMain } from "../../../IPC/main"
+    import { Main } from "../../../../types/IPC/Main"
+    import { onMount } from "svelte"
 
     
     const mappedCategories = Object.entries($categories).map(([id, category]) => {
@@ -32,7 +35,18 @@
         } else {
             chumsSyncCategories.update((categories) => categories.filter((c) => c !== id))
         }
+        // Save to settings
+        sendMain(Main.SET_STORE_VALUE, { file: "SETTINGS", key: "chumsSyncCategories", value: $chumsSyncCategories })
     }
+
+    onMount(() => {
+        // Load saved settings
+        requestMain(Main.GET_STORE_VALUE, { file: "SETTINGS", key: "chumsSyncCategories" }, (response) => {
+            if (response?.value) {
+                chumsSyncCategories.set(response.value)
+            }
+        })
+    })
 </script>
 
 <div class="popup">

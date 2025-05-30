@@ -53,7 +53,7 @@ export class ChumsExport {
 
     private static getAllFreeShowSongIds(): string[] {
         const shows = stores.SHOWS.store as { [key: string]: any }
-        const selectedCategories = (stores.SETTINGS.get("chums_sync_categories") as string[]) || ["song"]
+        const selectedCategories = (stores.SETTINGS.get("chumsSyncCategories") as string[]) || ["song"]
         return Object.keys(shows).filter((key) => selectedCategories.includes(shows[key].category))
     }
 
@@ -63,7 +63,7 @@ export class ChumsExport {
 
         freeShowIds.forEach((key: string) => {
             const show = shows[key]
-            const selectedCategories = (stores.SETTINGS.get("chums_sync_categories") as string[]) || ["song"]
+            const selectedCategories = (stores.SETTINGS.get("chumsSyncCategories") as string[]) || ["song"]
             if (selectedCategories.includes(show.category)) {
                 const showData = this.loadShowData(show.name)
                 if (showData) {

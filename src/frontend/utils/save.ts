@@ -16,7 +16,7 @@ import {
     autosave,
     calendarAddShow,
     categories,
-    customMetadata,
+    chumsSyncCategories,
     customizedIcons,
     dataPath,
     deletedShows,
@@ -91,7 +91,7 @@ import {
     volume
 } from "../stores"
 import type { SaveActions, SaveData, SaveList, SaveListSettings, SaveListSyncedSettings } from "./../../types/Save"
-import { audioStreams, companion } from "./../stores"
+import { audioStreams } from "./../stores"
 import { newToast } from "./common"
 import { syncDrive } from "./drive"
 
@@ -108,13 +108,8 @@ export function save(closeWhenFinished = false, customTriggers: SaveActions = {}
         alertUpdates: get(alertUpdates),
         audioFolders: get(audioFolders),
         autoOutput: get(autoOutput),
-        maxConnections: get(maxConnections),
-        ports: get(ports),
-        disabledServers: get(disabledServers),
-        serverData: get(serverData),
         autosave: get(autosave),
         timeFormat: get(timeFormat),
-        // events: get(events),
         showsPath: get(showsPath),
         dataPath: get(dataPath),
         lockedOverlays: get(lockedOverlays),
@@ -125,44 +120,47 @@ export function save(closeWhenFinished = false, customTriggers: SaveActions = {}
         formatNewShow: get(formatNewShow),
         labelsDisabled: get(labelsDisabled),
         language: get(language),
+        maxConnections: get(maxConnections),
         mediaFolders: get(mediaFolders),
         mediaOptions: get(mediaOptions),
         openedFolders: get(openedFolders),
-        outLocked: get(outLocked),
         outputs: get(outputs),
         sorted: get(sorted),
         styles: get(styles),
+        outLocked: get(outLocked),
+        ports: get(ports),
+        disabledServers: get(disabledServers),
+        serverData: get(serverData),
         remotePassword: get(remotePassword),
         resized: get(resized),
         slidesOptions: get(slidesOptions),
         splitLines: get(splitLines),
-        // templates: get(templates),
         theme: get(theme),
         transitionData: get(transitionData),
-        // themes: get(themes),
         volume: get(volume),
         gain: get(gain),
         driveData: get(driveData),
         calendarAddShow: get(calendarAddShow),
         metronome: get(metronome),
         effectsLibrary: get(effectsLibrary),
-        special: get(special)
+        special: get(special),
+        chumsSyncCategories: get(chumsSyncCategories)
     }
 
     // settings exclusive to the local mashine (path names that shouldn't be synced with cloud)
     const syncedSettings: { [key in SaveListSyncedSettings]: any } = {
         categories: get(categories),
         drawSettings: get(drawSettings),
-        groups: get(groups),
         overlayCategories: get(overlayCategories),
-        scriptures: get(scriptures),
-        scriptureSettings: get(scriptureSettings),
         templateCategories: get(templateCategories),
         timers: get(timers),
         variables: get(variables),
         triggers: get(triggers),
         audioStreams: get(audioStreams),
         audioPlaylists: get(audioPlaylists),
+        scriptures: get(scriptures),
+        scriptureSettings: get(scriptureSettings),
+        groups: get(groups),
         midiIn: get(actions),
         emitters: get(emitters),
         playerVideos: get(playerVideos),
@@ -171,9 +169,9 @@ export function save(closeWhenFinished = false, customTriggers: SaveActions = {}
         actionTags: get(actionTags),
         variableTags: get(variableTags),
         customizedIcons: get(customizedIcons),
-        companion: get(companion),
+        companion: null,
         globalTags: get(globalTags),
-        customMetadata: get(customMetadata)
+        customMetadata: null
     }
 
     const allSavedData: SaveData = {
@@ -377,5 +375,6 @@ const saveList: { [key in SaveList]: any } = {
     special,
     companion: null,
     globalTags,
-    customMetadata: null
+    customMetadata: null,
+    chumsSyncCategories: chumsSyncCategories
 }
