@@ -155,7 +155,7 @@
 </div> -->
 
 {#each servers as server}
-    {@const disabled = server.id === "companion" ? $companion.enabled !== true : server.enabledByDefault ? $disabledServers[server.id] === true : $disabledServers[server.id] !== false}
+    {@const disabled = server.id === "companion" ? $companion?.enabled !== true : server.enabledByDefault ? $disabledServers[server.id] === true : $disabledServers[server.id] !== false}
     {@const connections = Object.keys($connections[server.id.toUpperCase()] || {})?.length || 0}
     <CombinedInput>
         <span style="width: 100%;">
@@ -184,7 +184,7 @@
         </span>
         <span class="alignRight" style="padding-inline-start: 10px;">
             {#if server.id === "companion"}
-                <Checkbox checked={$companion.enabled === true} on:change={toggleCompanion} />
+                <Checkbox checked={$companion?.enabled === true} on:change={toggleCompanion} />
             {:else}
                 <Checkbox checked={server.enabledByDefault ? $disabledServers[server.id] !== true : $disabledServers[server.id] === false} on:change={(e) => toggleServer(e, server.id)} />
             {/if}

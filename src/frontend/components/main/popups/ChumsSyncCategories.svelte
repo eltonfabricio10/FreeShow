@@ -25,17 +25,12 @@
     
 
     function handleChange(e: Event, id: string) {
-        const customEvent = e as CustomEvent<boolean>
-        toggleCategory(id, customEvent.detail)
+        toggleCategory(id)
     }
 
-    function toggleCategory(id: string, checked: boolean) {
-        if (checked) {
-            chumsSyncCategories.update((categories) => [...categories, id])
-        } else {
-            chumsSyncCategories.update((categories) => categories.filter((c) => c !== id))
-        }
-        // Save to settings
+    function toggleCategory(id: string) {
+        if ($chumsSyncCategories.indexOf(id) === -1) chumsSyncCategories.update(() => [...$chumsSyncCategories, id])
+        else chumsSyncCategories.update(() => $chumsSyncCategories.filter((c) => c !== id))
         sendMain(Main.SET_STORE_VALUE, { file: "SETTINGS", key: "chumsSyncCategories", value: $chumsSyncCategories })
     }
 
