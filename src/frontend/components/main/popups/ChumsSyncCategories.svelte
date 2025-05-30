@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { get } from "svelte/store"
     import { activePopup, categories, chumsSyncCategories, shows } from "../../../stores"
     import { sortByName } from "../../../components/helpers/array"
     import T from "../../../components/helpers/T.svelte"
@@ -24,7 +25,7 @@
     $: categoryOptions = sortByName(mappedCategories, "displayName")
     
 
-    function handleChange(e: Event, id: string) {
+    function handleChange(id: string) {
         toggleCategory(id)
     }
 
@@ -33,15 +34,17 @@
         else chumsSyncCategories.update(() => $chumsSyncCategories.filter((c) => c !== id))
         sendMain(Main.SET_STORE_VALUE, { file: "SETTINGS", key: "chumsSyncCategories", value: $chumsSyncCategories })
     }
-
+/*
     onMount(() => {
         // Load saved settings
+        console.log("GET", get(chumsSyncCategories))
         requestMain(Main.GET_STORE_VALUE, { file: "SETTINGS", key: "chumsSyncCategories" }, (response) => {
+            console.log("RESPONSE IS", response)
             if (response?.value) {
                 chumsSyncCategories.set(response.value)
             }
         })
-    })
+    })*/
 </script>
 
 <div class="popup">
@@ -57,7 +60,7 @@
                 <div class="category">
                     <Checkbox
                         checked={$chumsSyncCategories.includes(id)}
-                        on:change={(e) => handleChange(e, id)}
+                        on:change={() => handleChange(id)}
                     />
                     <span class="count">{displayName} ({count})</span>
                 </div>

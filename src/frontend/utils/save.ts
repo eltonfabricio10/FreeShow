@@ -147,7 +147,7 @@ export function save(closeWhenFinished = false, customTriggers: SaveActions = {}
         chumsSyncCategories: get(chumsSyncCategories)
     }
 
-    // settings exclusive to the local mashine (path names that shouldn't be synced with cloud)
+    // settings exclusive to the local machine (path names that shouldn't be synced with cloud)
     const syncedSettings: { [key in SaveListSyncedSettings]: any } = {
         categories: get(categories),
         drawSettings: get(drawSettings),
@@ -376,5 +376,5 @@ const saveList: { [key in SaveList]: any } = {
     companion: null,
     globalTags,
     customMetadata: null,
-    chumsSyncCategories: chumsSyncCategories
+    chumsSyncCategories
 }
