@@ -1,15 +1,10 @@
 <script lang="ts">
-    import { get } from "svelte/store"
     import { activePopup, categories, chumsSyncCategories, shows } from "../../../stores"
     import { sortByName } from "../../../components/helpers/array"
     import T from "../../../components/helpers/T.svelte"
     import Button from "../../../components/inputs/Button.svelte"
     import Checkbox from "../../../components/inputs/Checkbox.svelte"
     import { translate } from "../../../utils/language"
-    import { sendMain, requestMain } from "../../../IPC/main"
-    import { Main } from "../../../../types/IPC/Main"
-    import { onMount } from "svelte"
-
     
     const mappedCategories = Object.entries($categories).map(([id, category]) => {
         const mapped = {
@@ -32,19 +27,8 @@
     function toggleCategory(id: string) {
         if ($chumsSyncCategories.indexOf(id) === -1) chumsSyncCategories.update(() => [...$chumsSyncCategories, id])
         else chumsSyncCategories.update(() => $chumsSyncCategories.filter((c) => c !== id))
-        sendMain(Main.SET_STORE_VALUE, { file: "SETTINGS", key: "chumsSyncCategories", value: $chumsSyncCategories })
     }
-/*
-    onMount(() => {
-        // Load saved settings
-        console.log("GET", get(chumsSyncCategories))
-        requestMain(Main.GET_STORE_VALUE, { file: "SETTINGS", key: "chumsSyncCategories" }, (response) => {
-            console.log("RESPONSE IS", response)
-            if (response?.value) {
-                chumsSyncCategories.set(response.value)
-            }
-        })
-    })*/
+
 </script>
 
 <div class="popup">
